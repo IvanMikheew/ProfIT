@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="mybtn"> Нажать. Для начала второго этапа</button>
+    <table>
+        <td id="inner1"></td>
+        <td id="inner2" ; valign="top"></td>
+    </table>
+    <script>
+        class Rider {
+            constructor(number, name, lastName, rating, country, time) {
+                this.number = number;
+                this.name = name;
+                this.lastName = lastName;
+                this.rating = rating;
+                this.country = country;
+                this.time = time;
+            }
+        }
+        // Функция задает имя/фамилию случайным образом из массива
+        function getName(arr) {
+            return arr[Math.floor(Math.random() * arr.length) + 0];
+        }
+
+        // Функция случайным образом задает рейтинг от 0 до 100
+        function getRating() {
+            return Math.round(Math.random() * 100) + 0;
+        }
+
+        // Функция случайным образом задает время велосипедиста на этапе
+        function getTime(arr) {
+            for (let i = 0; i < arr.length; i++) {
+                arr[i]['time'] = +(Math.random() * 100 + 100).toFixed(2);
+            }
+            return arr;
+        }
+
+        // Функция присваивает название страны велосипедисту
+        function getCountries(arr) {
+            let k = 0;
+            for (let i = 1; i < arr.length + 1; i++) {
+                arr[i - 1]['country'] = countries[k];
+                if (i % 4 == 0) {
+                    k += 1;
+                }
+            }
+        }
+
+        // Функция возвращает время самого медленного гонщика по стране
+        function countryTimeMax(arr) {
+            return Math.max(arr[0]['time'], arr[1]['time'], arr[2]['time'], arr[3]['time'])
+        }
+
+        // Функция фозвращает время самого быстрого гонщика по стране
+        function countryTimeMin(arr) {
+            return Math.min(arr[0]['time'], arr[1]['time'], arr[2]['time'], arr[3]['time'])
+        }
+
+        // Функция фозвращает суммиролванное время самого быстрого гонщика по стране
+        function riderTimeMin(arr) {
+            return Math.min(arr[0]['sumTime'], arr[1]['sumTime'], arr[2]['sumTime'], arr[3]['sumTime'])
+        }
+
+        // Функция возвращает среднее арифмитическое рейтинга гонщиков по стране
+        function avgRating(arr) {
+            let sum = 0;
+            for (let i = 0; i < arr.length; i++) {
+                sum += arr[i]['rating']
+            }
+            return sum / arr.length;
+        }
+
+
+        let countries = ["Россия", "Российская империя", "Русское царство", "СССР", "Российская республика", "РСФСР", "Российское государство"];
+        let name = ["Иван", "Андрей", "Олег", "Николай", "Петр", "Степан", "Федор", "Вячеслав", "Кирилл", "Евгений", "Станислав", "Тимофей"];
+        let lastName = ["Аброськин", "Авдюшин", "Акашев", "Гашенко", "Гладких", "Демешин", "Дорохов", "Ельцин", "Жехов", "Жиляков", "Илларионов", "Карташев"]
+
+        let rider1 = new Rider(1, getName(name), getName(lastName), getRating());
+        let rider2 = new Rider(2, getName(name), getName(lastName), getRating());
+        let rider3 = new Rider(3, getName(name), getName(lastName), getRating());
+        let rider4 = new Rider(4, getName(name), getName(lastName), getRating());
+        let russia = [rider1, rider2, rider3, rider4];
+
+
+        let rider5 = new Rider(5, getName(name), getName(lastName), getRating());
+        let rider6 = new Rider(6, getName(name), getName(lastName), getRating());
+        let rider7 = new Rider(7, getName(name), getName(lastName), getRating());
+        let rider8 = new Rider(8, getName(name), getName(lastName), getRating());
+        let rusEmpire = [rider5, rider6, rider7, rider8];
+
+        let rider9 = new Rider(9, getName(name), getName(lastName), getRating());
+        let rider10 = new Rider(10, getName(name), getName(lastName), getRating());
+        let rider11 = new Rider(11, getName(name), getName(lastName), getRating());
+        let rider12 = new Rider(12, getName(name), getName(lastName), getRating());
+        let rusKingdom = [rider9, rider10, rider11, rider12];
+
+        let rider13 = new Rider(13, getName(name), getName(lastName), getRating());
+        let rider14 = new Rider(14, getName(name), getName(lastName), getRating());
+        let rider15 = new Rider(15, getName(name), getName(lastName), getRating());
+        let rider16 = new Rider(16, getName(name), getName(lastName), getRating());
+        let ussr = [rider13, rider14, rider15, rider16];
+
+        let rider17 = new Rider(17, getName(name), getName(lastName), getRating());
+        let rider18 = new Rider(18, getName(name), getName(lastName), getRating());
+        let rider19 = new Rider(19, getName(name), getName(lastName), getRating());
+        let rider20 = new Rider(20, getName(name), getName(lastName), getRating());
+        let rusRepublic = [rider17, rider18, rider19, rider20];
+
+        let allRiders = [rider1, rider2, rider3, rider4, rider5, rider6, rider7, rider8, rider9, rider10, rider11, rider12, rider13, rider14, rider15, rider16, rider17, rider18, rider19, rider20];
+
+        getCountries(allRiders);
+
+        for (let i = 0; i < allRiders.length; i++) {
+            allRiders[i]['sumTime'] = 0;
+        }
+
+        // Переменные для подсчета мест стран на этапах
+        let russiaPlace = 0;
+        let rusEmpirePlace = 0;
+        let rusKingdomPlace = 0;
+        let ussrPlace = 0;
+        let rusRepublicPlace = 0;
+
+        let country = [
+            { name: russia[0]['country'], },
+            { name: rusEmpire[0]['country'], },
+            { name: rusKingdom[0]['country'], },
+            { name: ussr[0]['country'], },
+            { name: rusRepublic[0]['country'], },
+        ];
+
+        // Начало первого круга соревнований
+        let N = +prompt("Введите количество этапов в первом круге", "3");
+        if (isNaN(N)) {
+            alert("Вы ввели не число");
+            throw new Error();
+        } else if (N < 0) {
+            alert("Число должно быть больше ноля");
+            throw new Error();
+        } else {
+            for (let i = 0; i < N + 1; i++) {
+                // N + 1, чтобы в place ниже записалось значение последнего этапа. Иначе не хочет
+                getTime(allRiders);
+
+                // Присваиваем countryTime значение худшего велосипедиста по стране
+                country[0]['countryTime'] = Math.max(russia[0]['time'], russia[1]['time'], russia[2]['time'], russia[3]['time']);
+                country[1]['countryTime'] = Math.max(rusEmpire[0]['time'], rusEmpire[1]['time'], rusEmpire[2]['time'], rusEmpire[3]['time']);
+                country[2]['countryTime'] = Math.max(rusKingdom[0]['time'], rusKingdom[1]['time'], rusKingdom[2]['time'], rusKingdom[3]['time']);
+                country[3]['countryTime'] = Math.max(ussr[0]['time'], ussr[1]['time'], ussr[2]['time'], ussr[3]['time']);
+                country[4]['countryTime'] = Math.max(rusRepublic[0]['time'], rusRepublic[1]['time'], rusRepublic[2]['time'], rusRepublic[3]['time']);
+
+                country[0]['place'] = russiaPlace;
+                country[1]['place'] = rusEmpirePlace;
+                country[2]['place'] = rusKingdomPlace;
+                country[3]['place'] = ussrPlace;
+                country[4]['place'] = rusRepublicPlace;
+
+                // Соритруем массив country по времени худшего гонщика, чтобы определить места стран
+                country.sort((a, b) => { return a.countryTime - b.countryTime });
+
+                // Определяем место страны на этапе
+                for (let i = 0; i < country.length; i++) {
+                    if (country[i]['name'] == "Россия") {
+                        russiaPlace += i + 1;
+                    } else if (country[i]['name'] == "Российская империя") {
+                        rusEmpirePlace += i + 1;
+                    } else if (country[i]['name'] == "Русское царство") {
+                        rusKingdomPlace += i + 1;
+                    } else if (country[i]['name'] == "СССР") {
+                        ussrPlace += i + 1;
+                    } else if (country[i]['name'] == "Российская республика") {
+                        rusRepublicPlace += i + 1;
+                    }
+                }
+
+                // Суммирование времени гонщиков на этапах
+                if (i < N) {
+                    for (let i = 0; i < allRiders.length; i++) {
+                        allRiders[i]['sumTime'] += allRiders[i].time;
+                    }
+                }
+
+
+            }
+        }
+        // Сортируем, чтобы определить место каждой страны в итоговом зачете
+        country.sort((a, b) => { return a.place - b.place });
+
+
+        let bestRider = [
+            { riderTimeMin: riderTimeMin(russia), country: russia[0]['country'] },
+            { riderTimeMin: riderTimeMin(rusEmpire), country: rusEmpire[0]['country'] },
+            { riderTimeMin: riderTimeMin(rusKingdom), country: rusKingdom[0]['country'] },
+            { riderTimeMin: riderTimeMin(ussr), country: ussr[0]['country'] },
+            { riderTimeMin: riderTimeMin(rusRepublic), country: rusRepublic[0]['country'] },
+        ]
+
+        // Переносим время лучшего гонщика по стране в массив country
+        for (let i = 0; i < country.length; i++) {
+            for (let j = 0; j < bestRider.length; j++) {
+                if (bestRider[j].country == country[i].name) {
+                    country[i]['riderTimeMin'] = bestRider[j].riderTimeMin;
+                }
+            }
+        }
+
+        // Сортируем страны с одинаковым результатом по времени лучшего велосипедиста в стране
+        for (let i = 0; i < country.length - 1; i++) {
+            for (let j = 0; j < bestRider.length; j++) {
+                if (country[i]['place'] == country[i + 1]['place'] && country[i].name == bestRider[j].country) {
+                    if (country[i].riderTimeMin > country[i + 1].riderTimeMin) {
+                        let sort = country[i];
+                        country[i] = country[i + 1];
+                        country[i + 1] = sort;
+                    }
+                }
+            }
+        }
+
+
+        // Переменная для записи итогов в таблицу в тег <td>
+        let text1;
+
+        // Вывод итогов первого круга
+        text1 = "<h3>Итог первого круга по странам</h3>";
+        for (let i = 0; i < country.length; i++) {
+            text1 += `${i + 1} место - ${country[i].name} <br \/>`;
+        }
+
+        allRiders.sort((a, b) => { return a.sumTime - b.sumTime });
+
+        text1 += "<h3>Итог первого круга по участникам</h3>";
+        for (let i = 0; i < allRiders.length; i++) {
+            text1 += `<b>${allRiders[i].name} ${allRiders[i].lastName}</b>. <font color="blue">${allRiders[i].country}</font>. \
+            Суммарное время за круг - ${(allRiders[i].sumTime).toFixed(2)}<br \/>`;
+
+        }
+
+        document.getElementById("inner1").innerHTML = text1;
+
+        // Оставляем только 4 страны для второго круга
+        for (let i = 3; i < country.length; i++) {
+            country.pop();
+        }
+
+        // Начало второго круга соревнований
+
+        // Очищаем массив country
+        for (let i = 0; i < country.length; i++) {
+            country[i].countryTime = 0;
+            country[i].place = 0;
+        }
+
+        // Очищаем массив allRiders
+        for (let i = 0; i < allRiders.length; i++) {
+            allRiders[i]['sumTime'] = 0;
+        }
+
+        // Запуск второго круга соревнований через кнопку
+        document.body.onclick = function (e) {
+            e = e || event;
+            target = e.target || e.srcElement;
+            if ((target.id == "mybtn")) {
+
+                russiaPlace = 0;
+                rusEmpirePlace = 0;
+                rusKingdomPlace = 0;
+                ussrPlace = 0;
+                rusRepublicPlace = 0;
+
+                for (let i = 0; i < 2; i++) {
+                    
+                    getTime(allRiders);
+
+                    country.sort((a, b) => { return a.countryTime - b.countryTime });
+
+                    for (let i = 0; i < country.length; i++) {
+                        if (country[i]['name'] == "Россия") {
+                            country[i].countryTime = countryTimeMin(russia);
+                            russiaPlace += i + 1;
+                            country[i].place = russiaPlace;
+                        } else if (country[i]['name'] == "Российская империя") {
+                            country[i].countryTime = countryTimeMin(rusEmpire);
+                            rusEmpirePlace += i + 1;
+                            country[i].place = rusEmpirePlace;
+                        } else if (country[i]['name'] == "Русское царство") {
+                            country[i].countryTime = countryTimeMin(rusKingdom);
+                            rusKingdomPlace += i + 1;
+                            country[i].place = rusKingdomPlace;
+                        } else if (country[i]['name'] == "СССР") {
+                            country[i].countryTime = countryTimeMin(ussr);
+                            ussrPlace += i + 1;
+                            country[i].place = ussrPlace;
+                        } else if (country[i]['name'] == "Российская республика") {
+                            country[i].countryTime = countryTimeMin(rusRepublic);
+                            rusRepublicPlace += i + 1;
+                            country[i].place = rusRepublicPlace;
+                        }
+                    }
+
+                    country.sort((a, b) => { return a.place - b.place });
+
+                    for (let i = 0; i < allRiders.length; i++) {
+                        allRiders[i]['sumTime'] += allRiders[i].time;
+                    }
+
+                    let avg_rating = [
+                        { avgRating: avgRating(russia), country: russia[0]['country'] },
+                        { avgRating: avgRating(rusEmpire), country: rusEmpire[0]['country'] },
+                        { avgRating: avgRating(rusKingdom), country: rusKingdom[0]['country'] },
+                        { avgRating: avgRating(ussr), country: ussr[0]['country'] },
+                        { avgRating: avgRating(rusRepublic), country: rusRepublic[0]['country'] },
+                    ]
+
+                    for (let i = 0; i < country.length; i++) {
+                        for (let j = 0; j < avg_rating.length; j++) {
+                            if (avg_rating[j].country == country[i].name) {
+                                country[i]['avgRating'] = avg_rating[j].avgRating;
+                            }
+                        }
+                    }
+
+                    for (let i = 0; i < country.length - 1; i++) {
+                        for (let j = 0; j < avg_rating.length; j++) {
+                            if (country[i]['place'] == country[i + 1]['place'] && country[i].name == avg_rating[j].country) {
+                                if (country[i].avgRating > country[i + 1].avgRating) {
+                                    let sort = country[i];
+                                    country[i] = country[i + 1];
+                                    country[i + 1] = sort;
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                // Вывод итогов второго круга
+
+                let text2;
+
+                text2 = "<h3>Итог второго круга по странам</h3>";
+                for (let i = 0; i < country.length; i++) {
+                    text2 += `${i + 1} место - ${country[i].name} <br \/>`;
+                }
+
+                allRiders.sort((a, b) => { return a.sumTime - b.sumTime })
+
+                text2 += "<h3>Итог второго круга по участникам</h3>";
+                let arr = [];
+                for (let i = 0; i < allRiders.length; i++) {
+                    for (let k = 0; k < country.length; k++) {
+                        if (allRiders[i].country == country[k].name) {
+                            text2 += `<b>${allRiders[i].name} ${allRiders[i].lastName}</b>. <font color="blue">${allRiders[i].country}</font>. \
+                            Суммарное время за круг - ${(allRiders[i].sumTime).toFixed(2)}<br \/>`;
+                        }
+                    }
+                }
+                document.getElementById("inner2").innerHTML = text2;
+
+                alert(`Страна-победитель - ${country[0].name}`);
+
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
