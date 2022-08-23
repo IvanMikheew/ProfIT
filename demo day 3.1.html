@@ -32,14 +32,21 @@
                 arr = []
             }
 
-            get allRiders() {
-                
+            set name(arr) {
+                return arr[Math.floor(Math.random() * arr.length) + 0];    
             }
 
         }
 
         class Country {
 
+        }
+
+        function getRiders(arr) {
+            arr = new Array(12);
+            for (let i = 0; i < arr.length; i++) {
+                arr[i] = new Rider(i, arr[i].name(maleNamesRus));
+            }
         }
     </script>
 </body>
