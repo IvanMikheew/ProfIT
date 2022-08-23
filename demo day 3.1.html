@@ -24,11 +24,11 @@
         // всех гонщиков страны.
         
         class Country {
-            constructor(name, place, sumPlaces, rider) {
+            constructor(name, place, sumPlaces, riders) {
                 this.name = name;
                 this.place = place;
                 this.sumPlaces = sumPlaces;
-                this.rider = [];
+                this.riders = riders;
             }
         }
 
@@ -54,7 +54,7 @@
 
         function getRiders(arr) {
             for (let i = 0; i < 12; i++) {
-                arr[i] = new Rider(i + 1, setName(maleNamesRus), setName(maleNamesRus),);
+                arr[i] = new Rider(i + 1, setName(maleNamesRus), setName(maleSurnamesRus),);
             }
         }
 
@@ -62,6 +62,11 @@
         getRiders(riders);
         console.log(riders);
         console.log(riders[0].name);
+
+        let rider1 = new Rider(1, setName(maleNamesRus), setName(maleSurnamesRus));
+        let russia = new Country("Россия", '', '', riders);
+        console.log(rider1);
+        console.log(russia.riders[0]);
 
     </script>
 </body>
