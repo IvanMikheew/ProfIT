@@ -22,7 +22,7 @@
         // (занявшего первое место) гонщика этой страны на рассматриваемом этапе. Место страны в итоговом протоколе второго круга определяется 
         // по наименьшей сумме мест, занятых страной на этапах, а при равенстве этого показателя – по средне арифметическому значению рейтинга 
         // всех гонщиков страны.
-        
+
         class Country {
             constructor(name, place, sumPlaces, riders) {
                 this.name = name;
@@ -42,19 +42,17 @@
                 this.place = place;
             }
 
-            getRating() {
+            static setName(arr) {
+                return arr[Math.floor(Math.random() * arr.length)];
+            }
+            static getRating() {
                 return Math.round(Math.random() * 100) + 0;
             }
         }
 
-
-        function setName(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
         function getRiders(arr) {
             for (let i = 0; i < 12; i++) {
-                arr[i] = new Rider(i + 1, setName(maleNamesRus), setName(maleSurnamesRus),);
+                arr[i] = new Rider(i + 1, Rider.setName(maleNamesRus), Rider.setName(maleSurnamesRus),);
             }
         }
 
@@ -63,7 +61,7 @@
         console.log(riders);
         console.log(riders[0].name);
 
-        let rider1 = new Rider(1, setName(maleNamesRus), setName(maleSurnamesRus));
+        let rider1 = new Rider(1,  Rider.setName(maleNamesRus),  Rider.setName(maleSurnamesRus));
         let russia = new Country("Россия", '', '', riders);
         console.log(rider1);
         console.log(russia.riders[0]);
