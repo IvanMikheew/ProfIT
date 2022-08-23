@@ -30,6 +30,15 @@
                 this.sumPlaces = sumPlaces;
                 this.riders = riders;
             }
+
+            setRiders() {
+                let arrOfRiders = [];
+                for (let i = 0; i < 4; i++) {
+                    arrOfRiders[i] = new Rider(i + 1, Rider.setName(maleNamesRus), Rider.setName(maleSurnamesRus));
+                }
+                return this.riders = arrOfRiders;
+            }
+
         }
 
         class Rider {
@@ -45,26 +54,27 @@
             static setName(arr) {
                 return arr[Math.floor(Math.random() * arr.length)];
             }
-            static getRating() {
-                return Math.round(Math.random() * 100) + 0;
+            static setRating() {
+                return Math.round(Math.random() * 100);
             }
         }
 
-        function getRiders(arr) {
-            for (let i = 0; i < 12; i++) {
-                arr[i] = new Rider(i + 1, Rider.setName(maleNamesRus), Rider.setName(maleSurnamesRus),);
-            }
+        let allCountries = [
+            new Country("Россия"),
+            new Country("Российская империя"),
+            new Country("Русское царство"),
+            new Country("СССР"),
+            new Country("Российская республика"),
+        ]
+
+        for (let i = 0; i < allCountries.length; i++) {
+            allCountries[i].setRiders();
         }
 
-        let riders = new Array(12);
-        getRiders(riders);
-        console.log(riders);
-        console.log(riders[0].name);
 
-        let rider1 = new Rider(1,  Rider.setName(maleNamesRus),  Rider.setName(maleSurnamesRus));
-        let russia = new Country("Россия", '', '', riders);
-        console.log(rider1);
-        console.log(russia.riders[0]);
+
+        console.log(allCountries);
+
 
     </script>
 </body>
