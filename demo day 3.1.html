@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script src="./male_names_rus.js"></script>
     <script src="./male_surnames_rus.js"></script>
@@ -20,34 +22,48 @@
         // (занявшего первое место) гонщика этой страны на рассматриваемом этапе. Место страны в итоговом протоколе второго круга определяется 
         // по наименьшей сумме мест, занятых страной на этапах, а при равенстве этого показателя – по средне арифметическому значению рейтинга 
         // всех гонщиков страны.
+        
+        class Country {
+            constructor(name, place, sumPlaces, rider) {
+                this.name = name;
+                this.place = place;
+                this.sumPlaces = sumPlaces;
+                this.rider = [];
+            }
+        }
 
         class Rider {
-            constructor(number, name, lastName, rating, country) {
+            constructor(number, name, lastName, rating, time, place) {
                 this.number = number;
                 this.name = name;
                 this.lastName = lastName;
                 this.rating = rating;
-                this.country = country;
-                // this.time = time;
-                arr = []
+                this.time = time;
+                this.place = place;
             }
 
-            set name(arr) {
-                return arr[Math.floor(Math.random() * arr.length) + 0];    
+            getRating() {
+                return Math.round(Math.random() * 100) + 0;
             }
-
         }
 
-        class Country {
 
+        function setName(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
         }
 
         function getRiders(arr) {
-            arr = new Array(12);
-            for (let i = 0; i < arr.length; i++) {
-                arr[i] = new Rider(i, arr[i].name(maleNamesRus));
+            for (let i = 0; i < 12; i++) {
+                arr[i] = new Rider(i + 1, setName(maleNamesRus), setName(maleNamesRus),);
             }
         }
+
+        let riders = new Array(12);
+        getRiders(riders);
+        console.log(riders);
+        console.log(riders[0].name);
+
     </script>
 </body>
+
 </html>
