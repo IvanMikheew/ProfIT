@@ -78,6 +78,19 @@
 
         }
 
+        function startFirstRound() {
+            let N = +prompt("Введите количество этапов в первом круге", "3");
+            if (isNaN(N)) {
+                throw alert("Вы ввели не число. Перезагрузите страницу, чтобы начать алгоритм заного.");
+            } else if (N < 0) {
+                throw alert("Число должно быть больше ноля. Перезагрузите страницу, чтобы начать алгоритм заного.");
+            } else {
+                for (let i = 0; i < N + 1; i++) {
+
+                }
+            }
+        }
+
         let allCountries = [
             new Country("Россия"),
             new Country("Российская империя"),
@@ -88,6 +101,7 @@
 
         Country.setRiders(allCountries);
         Country.startStage(allCountries);
+        startFirstRound();
         console.log(allCountries);
 
 
