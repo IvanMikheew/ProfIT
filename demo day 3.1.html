@@ -31,12 +31,26 @@
                 this.riders = riders;
             }
 
-            setRiders() {
-                let arrOfRiders = [];
-                for (let i = 0; i < 4; i++) {
-                    arrOfRiders[i] = new Rider(i + 1, Rider.setName(maleNamesRus), Rider.setName(maleSurnamesRus));
+            static setRiders(arrOfAllCountries) {
+                for (let i = 0; i < arrOfAllCountries.length; i++) {
+                    let arrOfRiders = [];
+                    for (let j = 0; j < 4; j++) {
+                        arrOfRiders[j] = new Rider(j + 1, Rider.setName(maleNamesRus), Rider.setName(maleSurnamesRus));
+                    }
+                    arrOfAllCountries[i].riders = arrOfRiders;
                 }
-                return this.riders = arrOfRiders;
+                return arrOfAllCountries;
+            }
+
+
+            static startStage(arrOfAllCountries) {
+                for (let i = 0; i < arrOfAllCountries.length; i++) {
+                    let arrOfRiders = [];
+                    for (let j = 0; j < 4; j++) {
+                        arrOfAllCountries[i].riders[j].timeOnStage = +(Math.random() * 100 + 100).toFixed(2);
+                    }
+                }
+                return arrOfAllCountries;
             }
 
         }
@@ -57,6 +71,11 @@
             static setRating() {
                 return Math.round(Math.random() * 100);
             }
+
+            set timeOnStage(time) {
+                return this.time = time;
+            }
+
         }
 
         let allCountries = [
@@ -67,10 +86,8 @@
             new Country("Российская республика"),
         ]
 
-        for (let i = 0; i < allCountries.length; i++) {
-            allCountries[i].setRiders();
-        }
-
+        Country.setRiders(allCountries);
+        Country.startStage(allCountries);
         console.log(allCountries);
 
 
