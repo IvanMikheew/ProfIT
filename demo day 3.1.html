@@ -9,6 +9,10 @@
 </head>
 
 <body>
+    <table>
+        <td id="inner1"></td>
+        <td id="inner2" ; valign="top"></td>
+    </table>
     <script src="./male_names_rus.js"></script>
     <script src="./male_surnames_rus.js"></script>
     <script>
@@ -108,6 +112,7 @@
         }
 
         function startFirstRound() {
+            let firstRoundResults;
             let N = +prompt("Введите количество этапов в первом круге", "3");
             if (isNaN(N)) {
                 throw alert("Вы ввели не число. Перезагрузите страницу, чтобы начать алгоритм заного.");
@@ -127,7 +132,18 @@
                     // }
                 }
                 Country.equalCheck(allCountries);
+                document.getElementById("inner1").innerHTML = getResults(allCountries);
+                allCountries.pop();
             }
+        }
+
+        function getResults(arrOfAllCountries) {
+            let text = "<h3>Итог первого круга по странам</h3>";
+            for (let i = 0; i < arrOfAllCountries.length; i++) {
+                text += `${i + 1} место - ${arrOfAllCountries[i].name} <br \/>`;
+            }
+
+            return text;
         }
 
         let allCountries = [
