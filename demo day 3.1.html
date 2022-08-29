@@ -150,7 +150,11 @@
                 }
             }
             allRiders.sort((a, b) => { return a.sumTime - b.sumTime })
-            console.log(allRiders);
+            
+            text += "<h3>Итог первого круга по участникам</h3>";
+            for (let i = 0; i < allRiders.length; i++) {
+                text += `<b>${allRiders[i].name} ${allRiders[i].lastName}</b>. Суммарное время за круг - ${(allRiders[i].sumTime).toFixed(2)}<br \/>`;
+            }
 
             return text;
         }
