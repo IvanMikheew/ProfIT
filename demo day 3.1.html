@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <button id="mybtn"> Нажать. Для начала второго этапа</button>
     <table>
         <td id="inner1"></td>
         <td id="inner2" ; valign="top"></td>
@@ -63,8 +64,8 @@
                 return arrOfAllCountries;
             }
 
-            static getPlace(arrOfAllCountries) {
-                arrOfAllCountries.sort((a, b) => { return a.riders[3].time - b.riders[3].time });
+            static getPlace(arrOfAllCountries, n) {
+                arrOfAllCountries.sort((a, b) => { return a.riders[n].time - b.riders[n].time });
                 for (let i = 0; i < arrOfAllCountries.length; i++) {
                     arrOfAllCountries[i].place = i + 1;
                     arrOfAllCountries[i].sumPlaces += arrOfAllCountries[i].place;
@@ -85,6 +86,26 @@
                     }
                 }
                 return arrOfAllCountries;
+            }
+
+            static equalitySecondRoundCheck(arrOfAllCountries) {
+                let sum = 0;
+                for (let i = 0; i < arrOfAllCountries.length - 1; i++) {
+                    for (let k = 0; k < 4; k++) {
+                        sum += arrOfAllCountries[i].riders[k].rating;
+                    }
+                }
+                console.log(arrOfAllCountries[0].riders[0]) //нужна добавить переменную среднего рейтинга, чтобы записать в нее значения sum
+            }
+
+            static clearValues(arrOfAllCountries) {
+                for (let i = 0; i < arrOfAllCountries.length; i++) {
+                    arrOfAllCountries[i].sumPlaces = 0;
+                    for (let k = 0; k < 4; k++) {
+                        arrOfAllCountries[i].riders[k].time = 0;
+                        arrOfAllCountries[i].riders[k].sumTime = 0;
+                    }
+                }
             }
         }
 
@@ -112,7 +133,6 @@
         }
 
         function startFirstRound() {
-            let firstRoundResults;
             let N = +prompt("Введите количество этапов в первом круге", "3");
             if (isNaN(N)) {
                 throw alert("Вы ввели не число. Перезагрузите страницу, чтобы начать алгоритм заного.");
@@ -122,11 +142,30 @@
                 for (let i = 0; i < N; i++) {
                     Country.startStage(allCountries);
                     Country.sortRidersByTime(allCountries);
-                    Country.getPlace(allCountries);
+                    Country.getPlace(allCountries, 3);
                 }
                 Country.equalityCheck(allCountries);
                 document.getElementById("inner1").innerHTML = getResults(allCountries);
                 allCountries.pop();
+            }
+        }
+
+        function startSecondRound() {
+            document.body.onclick = function (e) {
+                e = e || event;
+                target = e.target || e.srcElement;
+                if ((target.id == "mybtn")) {
+                    Country.clearValues(allCountries);
+                    for (let i = 0; i < 2; i++) {
+                        Country.startStage(allCountries);
+                        Country.sortRidersByTime(allCountries);
+                        Country.getPlace(allCountries, 0);
+
+                    }
+                    Country.equalitySecondRoundCheck(allCountries);
+                    document.getElementById("inner2").innerHTML = getResults(allCountries);
+                    console.log(allCountries);
+                }
             }
         }
 
@@ -143,7 +182,7 @@
                 }
             }
             allRiders.sort((a, b) => { return a.sumTime - b.sumTime })
-            
+
             text += "<h3>Итог первого круга по участникам</h3>";
             for (let i = 0; i < allRiders.length; i++) {
                 text += `<b>${allRiders[i].name} ${allRiders[i].lastName}</b>. Суммарное время за круг - ${(allRiders[i].sumTime).toFixed(2)}<br \/>`;
@@ -162,7 +201,7 @@
 
         Country.setRiders(allCountries);
         startFirstRound();
-        console.log(allCountries);
+        startSecondRound();
 
 
     </script>
