@@ -42,13 +42,18 @@
                 return arrOfAllCountries;
             }
 
-
             static startStage(arrOfAllCountries) {
                 for (let i = 0; i < arrOfAllCountries.length; i++) {
-                    let arrOfRiders = [];
                     for (let j = 0; j < 4; j++) {
                         arrOfAllCountries[i].riders[j].timeOnStage = +(Math.random() * 100 + 100).toFixed(2);
                     }
+                }
+                return arrOfAllCountries;
+            }
+
+            static minTime(arrOfAllCountries) {
+                for (let i = 0; i < arrOfAllCountries.length; i++) {
+                    arrOfAllCountries[i].riders.sort((a, b) => { return a.time - b.time });
                 }
                 return arrOfAllCountries;
             }
@@ -102,6 +107,7 @@
         Country.setRiders(allCountries);
         Country.startStage(allCountries);
         startFirstRound();
+        Country.minTime(allCountries);
         console.log(allCountries);
 
 
