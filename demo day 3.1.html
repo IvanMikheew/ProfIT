@@ -35,7 +35,7 @@
                 for (let i = 0; i < arrOfAllCountries.length; i++) {
                     let arrOfRiders = [];
                     for (let j = 0; j < 4; j++) {
-                        arrOfRiders[j] = new Rider(j + 1, Rider.setName(maleNamesRus), Rider.setName(maleSurnamesRus));
+                        arrOfRiders[j] = new Rider(j + 1, Rider.setName(maleNamesRus), Rider.setName(maleSurnamesRus), Rider.setRating());
                     }
                     arrOfAllCountries[i].riders = arrOfRiders;
                 }
@@ -51,23 +51,40 @@
                 return arrOfAllCountries;
             }
 
-            static minTime(arrOfAllCountries) {
+            static sortRidersByTime(arrOfAllCountries) {
                 for (let i = 0; i < arrOfAllCountries.length; i++) {
                     arrOfAllCountries[i].riders.sort((a, b) => { return a.time - b.time });
                 }
                 return arrOfAllCountries;
             }
 
+            static getPlace(arrOfAllCountries) {
+                arrOfAllCountries.sort((a, b) => { return a.riders[3].time - b.riders[3].time });
+                for (let i = 0; i < arrOfAllCountries.length; i++) {
+                    arrOfAllCountries[i].place = i + 1;
+                    arrOfAllCountries[i].sumPlaces += arrOfAllCountries[i].place;
+                }
+                arrOfAllCountries.sort((a, b) => { return a.sumPlaces - b.sumPlaces });
+                return arrOfAllCountries
+            }
+
+            static ravenstvo(arrOfAllCountries) {
+                for (let i = 0; i < arrOfAllCountries.length - 1; i++) {
+                    if (arrOfAllCountries[i].sumPlaces == arrOfAllCountries[i + 1].sumPlaces) {
+                        console.log("равно");
+                    }
+                }
+            }
         }
 
         class Rider {
-            constructor(number, name, lastName, rating, time, place) {
+            constructor(number, name, lastName, rating, time, sumTime) {
                 this.number = number;
                 this.name = name;
                 this.lastName = lastName;
                 this.rating = rating;
                 this.time = time;
-                this.place = place;
+                this.sumTime = sumTime;
             }
 
             static setName(arr) {
@@ -90,24 +107,30 @@
             } else if (N < 0) {
                 throw alert("Число должно быть больше ноля. Перезагрузите страницу, чтобы начать алгоритм заного.");
             } else {
-                for (let i = 0; i < N + 1; i++) {
-
+                for (let i = 0; i < N; i++) {
+                    Country.startStage(allCountries);
+                    Country.sortRidersByTime(allCountries);
+                    Country.getPlace(allCountries);
+                    // for (let j = 0; j < allCountries.length; j++) {
+                    //     if (allCountries[j].name == 'Россия') {
+                    //         console.log(allCountries[j].place);
+                    //     }
+                    // }
                 }
+                Country.ravenstvo(allCountries);
             }
         }
 
         let allCountries = [
-            new Country("Россия"),
-            new Country("Российская империя"),
-            new Country("Русское царство"),
-            new Country("СССР"),
-            new Country("Российская республика"),
+            new Country("Россия", 0, 0),
+            new Country("Российская империя", 0, 0),
+            new Country("Русское царство", 0, 0),
+            new Country("СССР", 0, 0),
+            new Country("Российская республика", 0, 0),
         ]
 
         Country.setRiders(allCountries);
-        Country.startStage(allCountries);
         startFirstRound();
-        Country.minTime(allCountries);
         console.log(allCountries);
 
 
