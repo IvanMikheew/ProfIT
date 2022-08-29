@@ -73,7 +73,7 @@
                 return arrOfAllCountries;
             }
 
-            static equalCheck(arrOfAllCountries) {
+            static equalityCheck(arrOfAllCountries) {
                 for (let i = 0; i < arrOfAllCountries.length - 1; i++) {
                     arrOfAllCountries[i].riders.sort((a, b) => { return a.sumTime - b.sumTime });
                     if (arrOfAllCountries[i].sumPlaces == arrOfAllCountries[i + 1].sumPlaces) {
@@ -131,7 +131,7 @@
                     //     }
                     // }
                 }
-                Country.equalCheck(allCountries);
+                Country.equalityCheck(allCountries);
                 document.getElementById("inner1").innerHTML = getResults(allCountries);
                 allCountries.pop();
             }
@@ -142,6 +142,15 @@
             for (let i = 0; i < arrOfAllCountries.length; i++) {
                 text += `${i + 1} место - ${arrOfAllCountries[i].name} <br \/>`;
             }
+
+            let allRiders = [];
+            for (let i = 0; i < arrOfAllCountries.length; i++) {
+                for (let k = 0; k < 4; k++) {
+                    allRiders.push(arrOfAllCountries[i].riders[k]);
+                }
+            }
+            allRiders.sort((a, b) => { return a.sumTime - b.sumTime })
+            console.log(allRiders);
 
             return text;
         }
