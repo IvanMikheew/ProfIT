@@ -123,13 +123,6 @@
                     Country.startStage(allCountries);
                     Country.sortRidersByTime(allCountries);
                     Country.getPlace(allCountries);
-                    // for (let j = 0; j < allCountries.length; j++) {
-                    //     for (let k = 0; k < allCountries[j].riders.length; k++) {
-                    //         if (allCountries[j].name == 'Россия' && allCountries[j].riders[k].number == 1) {
-                    //             console.log(allCountries[j].riders[k].time);
-                    //         }
-                    //     }
-                    // }
                 }
                 Country.equalityCheck(allCountries);
                 document.getElementById("inner1").innerHTML = getResults(allCountries);
