@@ -74,7 +74,7 @@
                 return arrOfAllCountries;
             }
 
-            static equalityCheck(arrOfAllCountries) {
+            static equalityFirsRoundCheck(arrOfAllCountries) {
                 for (let i = 0; i < arrOfAllCountries.length - 1; i++) {
                     arrOfAllCountries[i].riders.sort((a, b) => { return a.sumTime - b.sumTime });
                     if (arrOfAllCountries[i].sumPlaces == arrOfAllCountries[i + 1].sumPlaces) {
@@ -94,14 +94,23 @@
                     arrOfAllCountries[i].sumRating = 0;
                     for (let k = 0; k < 4; k++) {
                         arrOfAllCountries[i].sumRating += arrOfAllCountries[i].riders[k].rating;
-                        // if (arr[i] / 4 > arr[i + 1] / 4) {
-                        //     let sort = arr[i];
-                        //     arr[i] = arr[i + 1];
-                        //     arr[i + 1] = sort;
-                        // }
-
                     }
                 }
+                for (let i = 0; i < arrOfAllCountries.length; i++) {
+                    arrOfAllCountries[i].sumRating = arrOfAllCountries[i].sumRating / 4;
+                }
+
+                for (let i = 0; i < arrOfAllCountries.length - 1; i++) {
+                    if (arrOfAllCountries[i].sumPlaces == arrOfAllCountries[i + 1].sumPlaces) {
+                        console.log("Равно");
+                        if (arrOfAllCountries[i].sumRating > arrOfAllCountries[i + 1].sumRating) {
+                            let sort = arrOfAllCountries[i];
+                            arrOfAllCountries[i] = arrOfAllCountries[i + 1];
+                            arrOfAllCountries[i + 1] = sort;
+                        }
+                    }
+                }
+                return arrOfAllCountries;
             }
 
             static clearValues(arrOfAllCountries) {
@@ -150,7 +159,7 @@
                     Country.sortRidersByTime(allCountries);
                     Country.getPlace(allCountries, 3);
                 }
-                Country.equalityCheck(allCountries);
+                Country.equalityFirsRoundCheck(allCountries);
                 document.getElementById("inner1").innerHTML = getResults(allCountries, 1);
                 allCountries.pop();
             }
