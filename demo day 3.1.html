@@ -90,12 +90,18 @@
 
             static equalitySecondRoundCheck(arrOfAllCountries) {
                 let sum = 0;
-                for (let i = 0; i < arrOfAllCountries.length - 1; i++) {
+                for (let i = 0; i < arrOfAllCountries.length; i++) {
+                    arrOfAllCountries[i].sumRating = 0;
                     for (let k = 0; k < 4; k++) {
-                        sum += arrOfAllCountries[i].riders[k].rating;
+                        arrOfAllCountries[i].sumRating += arrOfAllCountries[i].riders[k].rating;
+                        // if (arr[i] / 4 > arr[i + 1] / 4) {
+                        //     let sort = arr[i];
+                        //     arr[i] = arr[i + 1];
+                        //     arr[i + 1] = sort;
+                        // }
+
                     }
                 }
-                console.log(arrOfAllCountries[0].riders[0]) //нужна добавить переменную среднего рейтинга, чтобы записать в нее значения sum
             }
 
             static clearValues(arrOfAllCountries) {
@@ -145,7 +151,7 @@
                     Country.getPlace(allCountries, 3);
                 }
                 Country.equalityCheck(allCountries);
-                document.getElementById("inner1").innerHTML = getResults(allCountries);
+                document.getElementById("inner1").innerHTML = getResults(allCountries, 1);
                 allCountries.pop();
             }
         }
@@ -163,14 +169,14 @@
 
                     }
                     Country.equalitySecondRoundCheck(allCountries);
-                    document.getElementById("inner2").innerHTML = getResults(allCountries);
+                    document.getElementById("inner2").innerHTML = getResults(allCountries, 2);
                     console.log(allCountries);
                 }
             }
         }
 
-        function getResults(arrOfAllCountries) {
-            let text = "<h3>Итог первого круга по странам</h3>";
+        function getResults(arrOfAllCountries, numberOfRound) {
+            let text = `<h3>Итог ${numberOfRound}-го круга по странам</h3>`;
             for (let i = 0; i < arrOfAllCountries.length; i++) {
                 text += `${i + 1} место - ${arrOfAllCountries[i].name} <br \/>`;
             }
@@ -183,7 +189,7 @@
             }
             allRiders.sort((a, b) => { return a.sumTime - b.sumTime })
 
-            text += "<h3>Итог первого круга по участникам</h3>";
+            text += `<h3>Итог ${numberOfRound}-го круга по участникам</h3>`;
             for (let i = 0; i < allRiders.length; i++) {
                 text += `<b>${allRiders[i].name} ${allRiders[i].lastName}</b>. Суммарное время за круг - ${(allRiders[i].sumTime).toFixed(2)}<br \/>`;
             }
